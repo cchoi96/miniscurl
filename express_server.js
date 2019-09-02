@@ -46,13 +46,13 @@ app.get('/urls.json', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  let templateVars = { urls: urlDatabase }
+  let templateVars = { urls: urlDatabase };
   res.render('urls_index', templateVars);
 });
 
 app.post('/urls', (req, res) => {
   const shortURL = generateRandomString();
-  let regex = new RegExp('^https{0,1}:\/\/');
+  let regex = new RegExp('^https{0,1}://');
   if (!regex.test(req.body.longURL)) {
     req.body.longURL = `https://${req.body.longURL}`;
   }
