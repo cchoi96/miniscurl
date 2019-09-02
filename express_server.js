@@ -36,6 +36,14 @@ app.get('/u/:shortURL', (req, res) => {
   }
 });
 
+app.post('/urls/:shortURL/delete', (req, res) => {
+  // console.log(req.params.shortURL);
+  // console.log(urlDatabase);
+  delete urlDatabase[req.params.shortURL];
+  res.redirect('/urls');
+});
+
+
 app.get('/urls/:shortURL', (req, res) => {
   let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
   res.render('urls_show', templateVars);
@@ -46,25 +54,30 @@ app.get('/urls.json', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  let templateVars = { urls: urlDatabase };
+  let templateVars = { urls: urlDatabase, errorMsg: false };
   res.render('urls_index', templateVars);
 });
 
 app.post('/urls', (req, res) => {
-  for (key in urlDatabase) {
+  let urlExists = false;
+  for (let key in urlDatabase) {
     if (req.body.longURL === urlDatabase[key]) {
-      res.redirect('/urls');
-      return;
+      urlExists = true;
+      break;
     }
   }
-
-  const shortURL = generateRandomString();
-  let regex = new RegExp('^https{0,1}://');
-  if (!regex.test(req.body.longURL)) {
-    req.body.longURL = `https://${req.body.longURL}`;
+  if (urlExists) {
+    let templateVars = { urls: urlDatabase, errorMsg: true };
+    res.render('urls_index', templateVars);
+  } else {
+    const shortURL = generateRandomString();
+    let regex = new RegExp('^https{0,1}://');
+    if (!regex.test(req.body.longURL)) {
+      req.body.longURL = `https://${req.body.longURL}`;
+    }
+    urlDatabase[shortURL] = req.body.longURL;
+    res.redirect(`/urls/${shortURL}`);
   }
-  urlDatabase[shortURL] = req.body.longURL;
-  res.redirect(`/urls/${shortURL}`);
 });
 
 app.get('/', (req, res) => {
