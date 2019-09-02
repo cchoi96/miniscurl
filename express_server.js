@@ -18,8 +18,8 @@ const generateRandomString = () => {
 };
 
 let urlDatabase = {
-  'b2xVn2': 'http://www.lighthouselabs.ca',
-  '9sm5xK': 'http://www.google.com'
+  'b2xVn2': 'https://www.lighthouselabs.ca',
+  '9sm5xK': 'https://www.google.com'
 };
 
 app.get('/urls/new', (req, res) => {
@@ -51,6 +51,13 @@ app.get('/urls', (req, res) => {
 });
 
 app.post('/urls', (req, res) => {
+  for (key in urlDatabase) {
+    if (req.body.longURL === urlDatabase[key]) {
+      res.redirect('/urls');
+      return;
+    }
+  }
+
   const shortURL = generateRandomString();
   let regex = new RegExp('^https{0,1}://');
   if (!regex.test(req.body.longURL)) {
