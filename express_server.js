@@ -17,7 +17,7 @@ const generateRandomString = () => {
   return string;
 };
 
-const urlDatabase = {
+let urlDatabase = {
   'b2xVn2': 'http://www.lighthouselabs.ca',
   '9sm5xK': 'http://www.google.com'
 };
@@ -26,9 +26,19 @@ app.get('/urls/new', (req, res) => {
   res.render('urls_new');
 });
 
-app.get("/urls/:shortURL", (req, res) => {
+app.get('/u/:shortURL', (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL];
+  if (req.params.shortURL === 'undefined') {
+    res.redirect('/urls');
+    return;
+  } else {
+    res.redirect(longURL);
+  }
+});
+
+app.get('/urls/:shortURL', (req, res) => {
   let templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
-  res.render("urls_show", templateVars);
+  res.render('urls_show', templateVars);
 });
 
 app.get('/urls.json', (req, res) => {
@@ -42,9 +52,12 @@ app.get('/urls', (req, res) => {
 
 app.post('/urls', (req, res) => {
   const shortURL = generateRandomString();
+  let regex = new RegExp('^https{0,1}:\/\/');
+  if (!regex.test(req.body.longURL)) {
+    req.body.longURL = `https://${req.body.longURL}`;
+  }
   urlDatabase[shortURL] = req.body.longURL;
-  console.log(req.body);
-  res.send('OK');
+  res.redirect(`/urls/${shortURL}`);
 });
 
 app.get('/', (req, res) => {
