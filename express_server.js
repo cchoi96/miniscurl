@@ -160,6 +160,7 @@ app.post('/register', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   let emptyField = false;
+
   if (email.length === 0 || password.length === 0) {
     emptyField = true;
   }
@@ -175,12 +176,19 @@ app.post('/register', (req, res) => {
       res.redirect('/urls');
     }
   }
-})
+});
 
 // LOGIN
 
+app.get('/login', (req, res) => {
+  let templateVars = {
+    user: users[req.cookies["user_id"]],
+    urls: urlDatabase,
+    errorMsg: false };
+  res.render('urls_login', templateVars);
+});
+
 app.post('/login', (req, res) => {
-  console.log(req.body);
   res.cookie('user_id', req.body.username);
   res.redirect('/urls');
 });

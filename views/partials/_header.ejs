@@ -15,11 +15,9 @@
           <h4 style="display: inline; vertical-align: middle; margin-right: 5px; color: white">Logged in as: <%= user.email %>!</h2>
           <button type="submit">Log Out</button>
         </form>
-    <% } else { %>
-      <form method="POST" action="/login">
-        <input type="text" name="username" placeholder="Username"/>
-        <button type="submit">Sign In</button>
-      </form>
+    <% } else  { %>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
     <% } %>
   </nav>
 </header>
