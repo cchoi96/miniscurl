@@ -7,6 +7,9 @@ const PORT = 8080;
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+// -------------------------------------------------------------------------------------------------------------
+
+// FUNCTIONS
 
 // generates the short URL, 6 characters long
 const generateRandomString = () => {
@@ -26,14 +29,45 @@ const longUrlHasHTTP = longURL => {
   return regex.test(longURL) ? longURL : `https://${longURL}`;
 };
 
+// Checks if email exists in user database
+const checkEmail = (email) => {
+  let keys = Object.keys(users);
+  for (let key of keys) {
+    if (users[key].email === email) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+// DATABASES
+
 let urlDatabase = {
   'b2xVn2': 'https://www.lighthouselabs.ca',
   '9sm5xK': 'https://www.google.com'
 };
 
+let users = {
+  'Chris': {
+    id: 'Chris',
+    email: 'chrischoi96@gmail.com',
+    password: 'chrischoi96'
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+// ROUTE HANDLERS
+
+// NEW URL PAGE
+
 app.get('/urls/new', (req, res) => {
   res.render('urls_new');
 });
+
+// INDIVIDUAL URL PAGES
 
 // checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
@@ -72,12 +106,14 @@ app.get('/urls/:shortURL', (req, res) => {
   res.render('urls_show', templateVars);
 });
 
+// MAIN URL PAGE
+
 app.get('/urls.json', (req, res) => {
   res.json(urlDatabase);
 });
 
+
 app.get('/urls', (req, res) => {
-  console.log(req);
   let templateVars = {
     username: req.cookies["username"],
     urls: urlDatabase,
@@ -107,19 +143,54 @@ app.post('/urls', (req, res) => {
   }
 });
 
+// REGISTERING
+
+app.get('/register', (req, res) => {
+  res.render('urls_register');
+});
+
+app.post('/register', (req, res) => {
+  const id = generateRandomString();
+  const email = req.body.email;
+  const password = req.body.password;
+  let emptyField = false;
+  if (email.length === 0 || password.length === 0) {
+    emptyField = true;
+  }
+  if (emptyField) {
+    res.status(400).send('One or both of the email or password fields is/are empty!');
+  } else {
+    if (!checkEmail(email)) {
+      res.status(400).send('The email is already in our database!');
+    } else {
+      users[id] = { id, email, password };
+      res.cookie('username', id);
+      res.redirect('/urls');
+    }
+  }
+})
+
+// LOGIN
+
 app.post('/login', (req, res) => {
   res.cookie('username', req.body.username);
   res.redirect('/urls');
 });
+
+// LOGOUT
 
 app.post('/logout', (req, res) => {
   res.clearCookie('username');
   res.redirect('/urls');
 });
 
+// MAIN PAGE
+
 app.get('/', (req, res) => {
   res.send('Hello!');
 });
+
+// -------------------------------------------------------------------------------------------------------------
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
