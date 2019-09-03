@@ -29,16 +29,20 @@ const longUrlHasHTTP = longURL => {
   return regex.test(longURL) ? longURL : `https://${longURL}`;
 };
 
-// Checks if email exists in user database
-const checkEmail = (email) => {
+// Checks if email exists in user database, returns user object if email exists
+const checkEmail = email => {
   let keys = Object.keys(users);
   for (let key of keys) {
     if (users[key].email === email) {
-      return false;
+      return users[key];
     }
   }
-  return true;
+  return -1;
 }
+
+// CHecks if password matches in database
+
+
 
 // -------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +68,12 @@ let users = {
 // NEW URL PAGE
 
 app.get('/urls/new', (req, res) => {
-  res.render('urls_new');
+  let templateVars = {
+    user: users[req.cookies["user_id"]],
+    shortURL: req.params.shortURL,
+    longURL: urlDatabase[req.params.shortURL]
+  };
+  res.render('urls_new', templateVars);
 });
 
 // INDIVIDUAL URL PAGES
@@ -98,7 +107,6 @@ app.post('/urls/:shortURL', (req, res) => {
 
 
 app.get('/urls/:shortURL', (req, res) => {
-  console.log(users);
   let templateVars = {
     user: users[req.cookies["user_id"]],
     shortURL: req.params.shortURL,
@@ -147,7 +155,6 @@ app.post('/urls', (req, res) => {
 // REGISTERING
 
 app.get('/register', (req, res) => {
-  console.log(users);
   let templateVars = {
     user: users[req.cookies["user_id"]],
     urls: urlDatabase,
@@ -168,7 +175,7 @@ app.post('/register', (req, res) => {
   if (emptyField) {
     res.status(400).send('One or both of the email or password fields is/are empty!');
   } else {
-    if (!checkEmail(email)) {
+    if (checkEmail(email) !== -1) {
       res.status(400).send('The email is already in our database!');
     } else {
       users[id] = { id, email, password };
@@ -189,8 +196,19 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  res.cookie('user_id', req.body.username);
-  res.redirect('/urls');
+  const email = req.body.email;
+  // User is either -1 (if not found in database), or user
+  const user = checkEmail(email);
+  if (user !== -1) {
+    if (user.password === req.body.password) {
+      res.cookie('user_id', user.id);
+      res.redirect('/urls');
+    } else {
+      res.status(403).send("The password is not valid!");
+    }
+  } else {
+    res.status(403).send("The email is not valid!");
+  }
 });
 
 // LOGOUT
