@@ -33,6 +33,7 @@ app.get('/urls/new', (req, res) => {
   res.render('urls_new');
 });
 
+// checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
   const longURL = urlDatabase[req.params.shortURL];
   if (req.params.shortURL === 'undefined') {
@@ -43,14 +44,16 @@ app.get('/u/:shortURL', (req, res) => {
   }
 });
 
+// Deletes shortURL & longURL from database based on shortURL
 app.post('/urls/:shortURL/delete', (req, res) => {
   delete urlDatabase[req.params.shortURL];
   res.redirect('/urls');
 });
 
+// Edits the longURL in database
 app.post('/urls/:shortURL/edit', (req, res) => {
   urlDatabase[req.params.shortURL] = longUrlHasHTTP(req.body.longURL);
-  res.redirect('/urls'); 
+  res.redirect('/urls');
 });
 
 app.post('/urls/:shortURL', (req, res) => {
@@ -72,6 +75,7 @@ app.get('/urls', (req, res) => {
   res.render('urls_index', templateVars);
 });
 
+// Checks if longURL already exists in the database, and if it does, redirect to the urls page with an error msg. If it does not, then add the shortURL: longURL to the database
 app.post('/urls', (req, res) => {
   let urlExists = false;
   for (let key in urlDatabase) {
