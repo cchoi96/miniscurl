@@ -6,6 +6,7 @@ const PORT = 8080;
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// generates the short URL, 6 characters long
 const generateRandomString = () => {
   let string = '';
   const length = 6;
@@ -17,9 +18,10 @@ const generateRandomString = () => {
   return string;
 };
 
+// Checks if user input longURL has https:// or http:// at beginning of string, and if not, adds it
 const longUrlHasHTTP = longURL => {
   let regex = new RegExp('^https{0,1}://');
-  return !regex.test(longURL);
+  return regex.test(longURL) ? longURL : `https://${longURL}`;
 };
 
 let urlDatabase = {
@@ -42,18 +44,12 @@ app.get('/u/:shortURL', (req, res) => {
 });
 
 app.post('/urls/:shortURL/delete', (req, res) => {
-  // console.log(req.params.shortURL);
-  // console.log(urlDatabase);
   delete urlDatabase[req.params.shortURL];
   res.redirect('/urls');
 });
 
 app.post('/urls/:shortURL/edit', (req, res) => {
-  if (longUrlHasHTTP(req.body.longURL)) {
-    urlDatabase[req.params.shortURL] = `https://${req.body.longURL}`;
-  } else {
-    urlDatabase[req.params.shortURL] = req.body.longURL;
-  }
+  urlDatabase[req.params.shortURL] = longUrlHasHTTP(req.body.longURL);
   res.redirect('/urls'); 
 });
 
@@ -89,10 +85,7 @@ app.post('/urls', (req, res) => {
     res.render('urls_index', templateVars);
   } else {
     const shortURL = generateRandomString();
-    if (longUrlHasHTTP(req.body.longURL)) {
-      req.body.longURL = `https://${req.body.longURL}`;
-    }
-    urlDatabase[shortURL] = req.body.longURL;
+    urlDatabase[shortURL] = longUrlHasHTTP(req.body.longURL);
     res.redirect(`/urls/${shortURL}`);
   }
 });
