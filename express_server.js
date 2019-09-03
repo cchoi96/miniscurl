@@ -17,6 +17,11 @@ const generateRandomString = () => {
   return string;
 };
 
+const longUrlHasHTTP = longURL => {
+  let regex = new RegExp('^https{0,1}://');
+  return !regex.test(longURL);
+};
+
 let urlDatabase = {
   'b2xVn2': 'https://www.lighthouselabs.ca',
   '9sm5xK': 'https://www.google.com'
@@ -41,6 +46,19 @@ app.post('/urls/:shortURL/delete', (req, res) => {
   // console.log(urlDatabase);
   delete urlDatabase[req.params.shortURL];
   res.redirect('/urls');
+});
+
+app.post('/urls/:shortURL/edit', (req, res) => {
+  if (longUrlHasHTTP(req.body.longURL)) {
+    urlDatabase[req.params.shortURL] = `https://${req.body.longURL}`;
+  } else {
+    urlDatabase[req.params.shortURL] = req.body.longURL;
+  }
+  res.redirect('/urls'); 
+});
+
+app.post('/urls/:shortURL', (req, res) => {
+  res.redirect(`/urls/${req.params.shortURL}`);
 });
 
 
@@ -71,8 +89,7 @@ app.post('/urls', (req, res) => {
     res.render('urls_index', templateVars);
   } else {
     const shortURL = generateRandomString();
-    let regex = new RegExp('^https{0,1}://');
-    if (!regex.test(req.body.longURL)) {
+    if (longUrlHasHTTP(req.body.longURL)) {
       req.body.longURL = `https://${req.body.longURL}`;
     }
     urlDatabase[shortURL] = req.body.longURL;
