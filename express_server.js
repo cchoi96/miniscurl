@@ -93,7 +93,7 @@ app.get('/urls/new', (req, res) => {
 
 // checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
-  const longURL = urlDatabase[req.params.shortURL];
+  const longURL = urlDatabase[req.params.shortURL].longURL;
   if (req.params.shortURL === 'undefined') {
     res.redirect('/urls');
     return;
@@ -104,28 +104,45 @@ app.get('/u/:shortURL', (req, res) => {
 
 // Deletes shortURL & longURL from database based on shortURL
 app.post('/urls/:shortURL/delete', (req, res) => {
-  delete urlDatabase[req.params.shortURL];
-  res.redirect('/urls');
+  // Checks if the userID in database matches the cookie ID
+  if (urlDatabase[req.params.shortURL].userID === req.cookies["user_id"]) {
+    delete urlDatabase[req.params.shortURL];
+    res.redirect('/urls');
+  } else {
+    res.redirect('/login');
+  }
 });
 
 // Edits the longURL in database
 app.post('/urls/:shortURL/edit', (req, res) => {
-  urlDatabase[req.params.shortURL] = longUrlHasHTTP(req.body.longURL);
-  res.redirect('/urls');
+  if (urlDatabase[req.params.shortURL].userID === req.cookies["user_id"]) {
+    urlDatabase[req.params.shortURL] = longUrlHasHTTP(req.body.longURL);
+    res.redirect('/urls');
+  } else {
+    res.redirect('/login');
+  }
 });
 
 app.post('/urls/:shortURL', (req, res) => {
-  res.redirect(`/urls/${req.params.shortURL}`);
+  if (urlDatabase[req.params.shortURL].userID === req.cookies["user_id"]) {
+    res.redirect(`/urls/${req.params.shortURL}`);
+  } else {
+    res.redirect('/login');
+  }
 });
 
 
 app.get('/urls/:shortURL', (req, res) => {
-  let templateVars = {
-    user: users[req.cookies["user_id"]],
-    shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL]
-  };
-  res.render('urls_show', templateVars);
+  if (urlDatabase[req.params.shortURL].userID === req.cookies["user_id"]) {
+    let templateVars = {
+      user: users[req.cookies["user_id"]],
+      shortURL: req.params.shortURL,
+      longURL: urlDatabase[req.params.shortURL].longURL
+    };
+    res.render('urls_show', templateVars);
+  } else {
+    res.status(400).send('You are not allowed access to this url! Please login to the correct account.');
+  }
 });
 
 // MAIN URL PAGE
