@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
+const methodOverride = require('method-override');
 const helpers = require('./helpers');
 // -------------------------------------------------------------------------------------------------------------
 
@@ -14,6 +15,7 @@ app.use(cookieSession({
   name: 'user_id',
   keys: [ "id" ]
 }));
+app.use(methodOverride('_method'));
 // -------------------------------------------------------------------------------------------------------------
 
 // DATABASES
@@ -61,7 +63,7 @@ app.get('/u/:shortURL', (req, res) => {
 });
 
   // Deletes shortURL & longURL from database based on shortURL
-app.post('/urls/:shortURL/delete', (req, res) => {
+app.delete('/urls/:shortURL/delete', (req, res) => {
   // Checks if the userID in database matches the cookie ID
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
     delete urlDatabase[req.params.shortURL];
@@ -72,7 +74,7 @@ app.post('/urls/:shortURL/delete', (req, res) => {
 });
 
   // Edits the longURL in database
-app.post('/urls/:shortURL/edit', (req, res) => {
+app.put('/urls/:shortURL/edit', (req, res) => {
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
     urlDatabase[req.params.shortURL].longURL = helpers.longUrlHasHTTP(req.body.longURL);
     res.redirect('/urls');
