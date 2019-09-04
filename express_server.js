@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
+const helpers = require('./helpers');
+// -------------------------------------------------------------------------------------------------------------
+
 const app = express();
 const PORT = 8080;
 
@@ -13,73 +16,25 @@ app.use(cookieSession({
 }));
 // -------------------------------------------------------------------------------------------------------------
 
-// FUNCTIONS
-
-// generates the short URL, 6 characters long
-const generateRandomString = () => {
-  let string = '';
-  const length = 6;
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charsLength = chars.length;
-  for (let i = 0; i < length; i++) {
-    string += chars.charAt(Math.floor(Math.random() * charsLength));
-  }
-  return string;
-};
-
-// Checks if user input longURL has https:// or http:// at beginning of string, and if not, adds it
-const longUrlHasHTTP = longURL => {
-  let regex = new RegExp('^https{0,1}://');
-  return regex.test(longURL) ? longURL : `https://${longURL}`;
-};
-
-// Checks if email exists in user database, returns user object if email exists
-const checkEmail = email => {
-  let keys = Object.keys(users);
-  for (let key of keys) {
-    if (users[key].email === email) {
-      return users[key];
-    }
-  }
-  return -1;
-}
-
-// Returns URLs where userID === id of user currently logged in
-
-const urlsForUser = id => {
-  let personalUrls = {};
-  let keys = Object.keys(urlDatabase);
-  for (key of keys) {
-    if (urlDatabase[key].userID === id) {
-      personalUrls[key] = urlDatabase[key].longURL;
-    }
-  }
-  return personalUrls;
-};
-
-// -------------------------------------------------------------------------------------------------------------
-
 // DATABASES
-
+  // Examples of database structures provided
 let urlDatabase = {
-  // 'b2xVn2': { longURL: 'https://www.lighthouselabs.ca', userID: 'Chris' },
-  // '9sm5xK': { longURL: 'https://www.google.com', userID: 'Chris' }
+  // 'b2xVn2': { longURL: 'https://www.lighthouselabs.ca', userID: 'Cd3fs3' },
+  // '9sm5xK': { longURL: 'https://www.google.com', userID: 'dsflk3' }
 };
 
 let users = {
+  // Example of what the user database looks like
   // 'Chris': {
   //   id: 'Chris',
   //   email: 'chrischoi96@gmail.com',
   //   password: 'chrischoi96'
   // }
-}
-
+};
 // -------------------------------------------------------------------------------------------------------------
 
 // ROUTE HANDLERS
-
-// NEW URL PAGE
-
+  // New URL Page
 app.get('/urls/new', (req, res) => {
   if (req.session.user_id) {
     let templateVars = {
@@ -93,9 +48,8 @@ app.get('/urls/new', (req, res) => {
   }
 });
 
-// INDIVIDUAL URL PAGES
-
-// checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
+  // Individual URL Page
+  // Checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
   const longURL = urlDatabase[req.params.shortURL].longURL;
   if (req.params.shortURL === 'undefined') {
@@ -106,7 +60,7 @@ app.get('/u/:shortURL', (req, res) => {
   }
 });
 
-// Deletes shortURL & longURL from database based on shortURL
+  // Deletes shortURL & longURL from database based on shortURL
 app.post('/urls/:shortURL/delete', (req, res) => {
   // Checks if the userID in database matches the cookie ID
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
@@ -117,10 +71,10 @@ app.post('/urls/:shortURL/delete', (req, res) => {
   }
 });
 
-// Edits the longURL in database
+  // Edits the longURL in database
 app.post('/urls/:shortURL/edit', (req, res) => {
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
-    urlDatabase[req.params.shortURL].longURL = longUrlHasHTTP(req.body.longURL);
+    urlDatabase[req.params.shortURL].longURL = helpers.longUrlHasHTTP(req.body.longURL);
     res.redirect('/urls');
   } else {
     res.redirect('/login');
@@ -134,7 +88,6 @@ app.post('/urls/:shortURL', (req, res) => {
     res.redirect('/login');
   }
 });
-
 
 app.get('/urls/:shortURL', (req, res) => {
   console.log(urlDatabase);
@@ -150,26 +103,25 @@ app.get('/urls/:shortURL', (req, res) => {
   }
 });
 
-// MAIN URL PAGE
-
+  // Main URL Page
 app.get('/urls.json', (req, res) => {
   res.json(urlDatabase);
 });
-
 
 app.get('/urls', (req, res) => {
   let templateVars = {
     user: users[req.session.user_id],
     // req.cookies['user_id'] returns an array of one value
-    urls: urlsForUser([req.session.user_id].toString()),
+    urls: helpers.urlsForUser([req.session.user_id].toString(), urlDatabase),
     errorMsg: false };
   res.render('urls_index', templateVars);
 });
 
-// Checks if longURL already exists in the database, and if it does, redirect to the urls page with an error msg. If it does not, then add the shortURL: longURL to the database
+  // Checks if longURL already exists in the database, and if it does, redirect to the urls page with an error msg. If it does not, then add the shortURL: longURL to the database
 app.post('/urls', (req, res) => {
   let urlExists = false;
-  for (let key in urlDatabase) {
+  let userDatabase = helpers.urlsForUser(req.session.user_id, urlDatabase);
+  for (let key in userDatabase) {
     if (req.body.longURL === urlDatabase[key].longURL) {
       urlExists = true;
       break;
@@ -178,21 +130,20 @@ app.post('/urls', (req, res) => {
   if (urlExists) {
     let templateVars = {
       user: users[req.session.user_id],
-      urls: urlsForUser([req.session.user_id].toString()),
+      urls: helpers.urlsForUser([req.session.user_id].toString(), urlDatabase),
       errorMsg: true };
     res.render('urls_index', templateVars);
   } else {
-    const shortURL = generateRandomString();
+    const shortURL = helpers.generateRandomString();
     urlDatabase[shortURL] = {
-      longURL: longUrlHasHTTP(req.body.longURL), 
+      longURL: helpers.longUrlHasHTTP(req.body.longURL),
       userID: req.session.user_id
     };
     res.redirect(`/urls/${shortURL}`);
   }
 });
 
-// REGISTERING
-
+  // Registering Page
 app.get('/register', (req, res) => {
   let templateVars = {
     user: users[req.session.user_id],
@@ -202,7 +153,7 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  const id = generateRandomString();
+  const id = helpers.generateRandomString();
   const email = req.body.email;
   const password = bcrypt.hashSync(req.body.password, 10);
   let emptyField = false;
@@ -214,7 +165,7 @@ app.post('/register', (req, res) => {
   if (emptyField) {
     res.status(400).send('One or both of the email or password fields is/are empty!');
   } else {
-    if (checkEmail(email) !== -1) {
+    if (helpers.checkEmail(email, users) !== -1) {
       res.status(400).send('The email is already in our database!');
     } else {
       users[id] = { id, email, password };
@@ -224,8 +175,7 @@ app.post('/register', (req, res) => {
   }
 });
 
-// LOGIN
-
+  // Login Page
 app.get('/login', (req, res) => {
   let templateVars = {
     user: users[req.session.user_id],
@@ -237,10 +187,9 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const email = req.body.email;
   // User is either -1 (if not found in database), or user
-  const user = checkEmail(email);
+  const user = helpers.checkEmail(email, users);
   if (user !== -1) {
     if (bcrypt.compareSync(req.body.password, user.password)) {
-      console.log(users);
       req.session.user_id = user.id;
       res.redirect('/urls');
     } else {
@@ -251,19 +200,16 @@ app.post('/login', (req, res) => {
   }
 });
 
-// LOGOUT
-
+  // Logout Page
 app.post('/logout', (req, res) => {
   res.clearCookie('user_id');
   res.redirect('/urls');
 });
 
-// MAIN PAGE
-
+  // Index Page
 app.get('/', (req, res) => {
   res.send('Hello!');
 });
-
 // -------------------------------------------------------------------------------------------------------------
 
 app.listen(PORT, () => {
