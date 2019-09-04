@@ -40,17 +40,26 @@ const checkEmail = email => {
   return -1;
 }
 
-// CHecks if password matches in database
+// Returns URLs where userID === id of user currently logged in
 
-
+const urlsForUser = id => {
+  let personalUrls = {};
+  let keys = Object.keys(urlDatabase);
+  for (key of keys) {
+    if (urlDatabase[key].userID === id) {
+      personalUrls[key] = urlDatabase[key].longURL;
+    }
+  }
+  return personalUrls;
+};
 
 // -------------------------------------------------------------------------------------------------------------
 
 // DATABASES
 
 let urlDatabase = {
-  'b2xVn2': 'https://www.lighthouselabs.ca',
-  '9sm5xK': 'https://www.google.com'
+  'b2xVn2': { longURL: 'https://www.lighthouselabs.ca', userID: 'Chris' },
+  '9sm5xK': { longURL: 'https://www.google.com', userID: 'Chris' }
 };
 
 let users = {
@@ -68,12 +77,16 @@ let users = {
 // NEW URL PAGE
 
 app.get('/urls/new', (req, res) => {
-  let templateVars = {
-    user: users[req.cookies["user_id"]],
-    shortURL: req.params.shortURL,
-    longURL: urlDatabase[req.params.shortURL]
-  };
-  res.render('urls_new', templateVars);
+  if (req.cookies["user_id"]) {
+    let templateVars = {
+      user: users[req.cookies["user_id"]],
+      shortURL: req.params.shortURL,
+      longURL: urlDatabase[req.params.shortURL]
+    };
+    res.render('urls_new', templateVars);
+  } else {
+    res.redirect("/login");
+  }
 });
 
 // INDIVIDUAL URL PAGES
@@ -123,9 +136,11 @@ app.get('/urls.json', (req, res) => {
 
 
 app.get('/urls', (req, res) => {
+  console.log(req.cookies["user_id"]);
   let templateVars = {
     user: users[req.cookies["user_id"]],
-    urls: urlDatabase,
+    // req.cookies['user_id'] returns an array of one value
+    urls: urlsForUser([req.cookies["user_id"]].toString()),
     errorMsg: false };
   res.render('urls_index', templateVars);
 });
