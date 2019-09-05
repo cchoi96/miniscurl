@@ -7,12 +7,13 @@
     <li><a href='/urls'>My URLs</a></li>
     <li id='create-url'><a href="/urls/new">Create New URL</a></li>
     <% if (user) { %>
-    <li class='button-left'>
-      <form method="POST" action="/logout">
-        <p>Logged in as: <%= user.email %>!</p>
-        <button type="submit">Log Out</button>
-      </form>
-    </li>
+    <div id='end'>
+      <li class='button-left'>
+        <form method="POST" action="/logout">
+          <button type="submit">Log Out</button>
+        </form>
+      </li>
+    </div>
     <% } else  { %>
     <div id='end'>
       <li class='button-left'>
@@ -32,3 +33,6 @@
     </div>
     <% } %>
 </nav>
+<% if (user) { %>
+  <p id='userID'>Logged in as: <%= user.email %>!</p>
+<% } %>
