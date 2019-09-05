@@ -28,18 +28,18 @@ body, html {
   font-size: 1.1em;
   padding: 20px 10px 15px 10px;
   list-style-type: none;
-  transition: 0.1s ease-out;
+  transition: 0.2s ease-out;
   color: #343a40;
+}
+
+.container li:hover {
+  transform: scale(1.1);
 }
 
 .container li > a {
   position: relative;
   color: #343a40;
   text-decoration: none;
-}
-
-.container li > a:hover {
-  color: #343a40;
 }
 
 .container li > a:before {
@@ -94,7 +94,6 @@ body, html {
 
 #end button:hover {
   cursor: pointer;
-  color: #A5A4A4;
 }
 
 #userID-container {
@@ -108,4 +107,36 @@ body, html {
   padding: 10px 10px 10px 10px;
   color: #f8f9fa;
   background-color: #00A7C4;
+}
+
+/* Need to do this again just for buttons without anchor tags :( */
+form > button {
+  position: relative;
+  color: #343a40;
+  text-decoration: none;
+}
+
+form > button:hover {
+  color: #343a40;
+}
+
+form > button:not(#edit-button):before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #343a40;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.25s ease-in-out 0s;
+  transition: all 0.25s ease-in-out 0s;
+}
+
+form > button:not(#edit-button):hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }

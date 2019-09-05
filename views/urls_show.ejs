@@ -2,36 +2,45 @@
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href='/css/show.css' rel='stylesheet' type='text/css'>
   <title>Short URL</title>
 </head>
 
 <body>
-  <% include partials/_header %>
-  <div>
+  <main>
+    <% include partials/_header %>
     <div>
-      <h5>TinyURL for: <%= longURL %></h5>
-      <% if (uniqueVisitorsCounter) { %>
-      <h6>Unique Visitors: <%= uniqueVisitorsCounter %> </h6>
-      <% } %>
-      <% if (visitors) { %>
-      <h6>Total Visitors: <%= visitors %> </h6>
-      <% } %>
-      <p>Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a></p>
       <div>
-        <form action="/urls/<%= shortURL %>/edit?_method=PUT" method="POST">
-          <div>
-            <input type="text" name="longURL" value=<%= longURL %>/>
-            <button type="submit">Edit</button>
+        <h3 id="title">TinyURL for...</h3>
+        <h3 id="longURL"><%= longURL %></h3>
+        <% if (uniqueVisitorsCounter) { %>
+        <h6>Unique Visitors: <%= uniqueVisitorsCounter %> </h6>
+        <% } %>
+        <% if (visitors) { %>
+        <h6>Total Visitors: <%= visitors %> </h6>
+        <% } %>
+        <p id="shortURL">Short URL</p>
+        <div id='arrow'>&darr;</div>
+        <div id="shortURL-link">
+            <a href="/u/<%= shortURL %>"><%= shortURL %></a>
           </div>
-        </form>
+        <div>
+          <form action="/urls/<%= shortURL %>/edit?_method=PUT" method="POST" id="edit-form">
+              <input type="text" name="longURL" value=<%= longURL %> />
+              <button type="submit" id="edit-button">Edit</button>
+          </form>
+        </div>
+        <% if (uniqueVisitorsObj) { %>
+        <% for (key in uniqueVisitorsObj) { %>
+        <p>Visitor: <%= key %> Time Stamp: <%= uniqueVisitorsObj[key] %></p>
+        <% } %>
+        <% } %>
       </div>
-      <% if (uniqueVisitorsObj) { %>
-      <% for (key in uniqueVisitorsObj) { %>
-      <p>Visitor: <%= key %> Time Stamp: <%= uniqueVisitorsObj[key] %></p>
-      <% } %>
-      <% } %>
     </div>
-  </div>
+  </main>
 </body>
 
 </html>

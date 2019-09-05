@@ -1,0 +1,116 @@
+main {
+  text-align: center;
+  width: 100%;
+  color: #343a40;
+}
+
+#title {
+  display: inline-block;
+  font-size: 2em;
+  margin: 50px 0 30px 0;
+  text-align: center;
+  width: 210px;
+}
+
+a {
+  text-decoration: none;
+  position: relative;
+  color: #343a40;
+  transition: 0.2s ease-in;
+}
+
+a:hover {
+  color: #343a40;
+}
+
+a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #343a40;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.25s ease-in-out 0s;
+  transition: all 0.25s ease-in-out 0s;
+}
+
+a:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+#title:after {
+  content: ' ';
+  display: block;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 5px;
+  margin-left: 22px;
+  border: 1px solid #343a40;
+}
+
+#longURL {
+  font-size: 1.5em;
+  margin-bottom: 30px;
+}
+
+#shortURL {
+  font-size: 1.3em;
+  margin-bottom: 5px;
+}
+
+#arrow {
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+#shortURL-link {
+  font-size: 1.3em;
+  transition: 0.2s ease-out;
+  margin-bottom: 20px;
+}
+#shortURL-link:hover {
+  transform: scale(1.1);
+}
+
+#edit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#edit-form button {
+  font-size: 1.2em;
+  width: 75px;
+  margin: 0 auto;
+  padding: 4px;
+  color: #00A7C4;
+  border: 2px solid #00A7C4;
+  border-radius: 7px;
+}
+
+#edit-form button:hover {
+  color: #f8f9fa;
+  background-color: #00A7C4;
+  cursor: pointer;
+}
+
+input {
+  width: 300px;
+  padding: 10px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 2px solid #00A7C4;
+  color: #00A7C4;
+}
+
+input:focus, textarea {
+  outline: none !important;
+}
+
+
+
