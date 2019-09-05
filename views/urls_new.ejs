@@ -3,20 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href='/css/new.css' rel='stylesheet' type='text/css'>
     <title>New URL</title>
   </head>
 
   <body>
     <% include partials/_header %>
     <main>
-      <h3>Create TinyURL</h3>
+      <h3 id="title">Create TinyURL</h3>
       <div>
-        <form action="/urls" method="POST">
-          <div>
-            <label for="longURL">Enter a URL:</label>
+        <form action="/urls" method="POST" id="new-form">
+            <h4>Enter a URL</h4>
             <input type="text" name="longURL" value="https://www.">
             <button type="submit">Submit</button>
-          </div>
         </form>
       </div>
     </main>

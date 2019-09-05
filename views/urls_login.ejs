@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login</title>
-  </head>
 
-  <body>
-    <% include partials/_header %>
-    <h3>Login</h3>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href='/css/login.css' rel='stylesheet' type='text/css'>
+  <title>Login</title>
+</head>
+
+<body>
+  <% include partials/_header %>
+  <main>
+    <h3 id="title">Login</h3>
     <div>
-      <form method="POST" action="/login">
-        <input type="email" name="email" placeholder="Email Address"/>
-        <input type="password" name="password" placeholder="Password" class="form-control"/>
+      <form method="POST" action="/login" id='login-form'>
+        <input type="email" name="email" placeholder="Email Address" />
+        <input type="password" name="password" placeholder="Password" class="form-control" />
         <button type="submit">Login</button>
       </form>
     </div>
-  </body>
-  
+  </main>
+</body>
+
 </html>

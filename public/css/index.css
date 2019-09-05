@@ -46,7 +46,15 @@ button:hover {
   margin: 50px 0 50px 0;
   text-align: center;
   width: 150px;
-  border-bottom: 1px solid #343a40;
+}
+
+#title:after {
+  content: ' ';
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  margin-top: 5px;
+  border: 1px solid #343a40;
 }
 
 table {
@@ -56,6 +64,6 @@ table {
 }
 
 table th {
-  font-size: 1.3em;
+  font-size: 1.4em;
   padding-bottom: 20px;
 }
