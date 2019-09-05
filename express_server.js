@@ -226,7 +226,11 @@ app.post('/logout', (req, res) => {
 
   // Index Page
 app.get('/', (req, res) => {
-  res.send('Hello!');
+  let templateVars = {
+    user: users[req.session.user_id],
+    urls: urlDatabase,
+    errorMsg: false };
+  res.render('/urls_home', templateVars);
 });
 // -------------------------------------------------------------------------------------------------------------
 
