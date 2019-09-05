@@ -20,10 +20,10 @@ app.use(methodOverride('_method'));
 // -------------------------------------------------------------------------------------------------------------
 
 // DATABASES
-  // Examples of database structures provided
+// Examples of database structures provided
 let urlDatabase = {
-  // 'b2xVn2': { longURL: 'https://www.lighthouselabs.ca', userID: 'Cd3fs3' },
-  // '9sm5xK': { longURL: 'https://www.google.com', userID: 'dsflk3' }
+// 'b2xVn2': { longURL: 'https://www.lighthouselabs.ca', userID: 'Cd3fs3' },
+// '9sm5xK': { longURL: 'https://www.google.com', userID: 'dsflk3' }
 };
 
 let users = {
@@ -38,7 +38,7 @@ let users = {
 
 
 // GLOBAL VARIABLES
-  // To count unique visitors
+// To count unique visitors
 let uniqueVisitors = {};
 let uniqueCounter = 0;
 let counter = 0;
@@ -46,7 +46,7 @@ let counter = 0;
 // -------------------------------------------------------------------------------------------------------------
 
 // ROUTE HANDLERS
-  // New URL Page
+// New URL Page
 app.get('/urls/new', (req, res) => {
   if (req.session.user_id) {
     let templateVars = {
@@ -60,8 +60,8 @@ app.get('/urls/new', (req, res) => {
   }
 });
 
-  // Individual URL Page
-  // Checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
+// Individual URL Page
+// Checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
   if (!uniqueVisitors[req.session.user_id]) {
     let timeStamp = Date.now();
@@ -80,9 +80,9 @@ app.get('/u/:shortURL', (req, res) => {
   }
 });
 
-  // Deletes shortURL & longURL from database based on shortURL
+// Deletes shortURL & longURL from database based on shortURL
 app.delete('/urls/:shortURL/delete', (req, res) => {
-  // Checks if the userID in database matches the cookie ID
+// Checks if the userID in database matches the cookie ID
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
     delete urlDatabase[req.params.shortURL];
     res.redirect('/urls');
@@ -91,7 +91,7 @@ app.delete('/urls/:shortURL/delete', (req, res) => {
   }
 });
 
-  // Edits the longURL in database
+// Edits the longURL in database
 app.put('/urls/:shortURL/edit', (req, res) => {
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
     urlDatabase[req.params.shortURL].longURL = helpers.longUrlHasHTTP(req.body.longURL);
@@ -125,7 +125,7 @@ app.get('/urls/:shortURL', (req, res) => {
   }
 });
 
-  // Main URL Page
+// Main URL Page
 app.get('/urls.json', (req, res) => {
   res.json(urlDatabase);
 });
@@ -139,7 +139,7 @@ app.get('/urls', (req, res) => {
   res.render('urls_index', templateVars);
 });
 
-  // Checks if longURL already exists in the database, and if it does, redirect to the urls page with an error msg. If it does not, then add the shortURL: longURL to the database
+// Checks if longURL already exists in the database, and if it does, redirect to the urls page with an error msg. If it does not, then add the shortURL: longURL to the database
 app.post('/urls', (req, res) => {
   let urlExists = false;
   let userDatabase = helpers.urlsForUser(req.session.user_id, urlDatabase);
@@ -165,7 +165,7 @@ app.post('/urls', (req, res) => {
   }
 });
 
-  // Registering Page
+// Registering Page
 app.get('/register', (req, res) => {
   let templateVars = {
     user: users[req.session.user_id],
@@ -197,7 +197,7 @@ app.post('/register', (req, res) => {
   }
 });
 
-  // Login Page
+// Login Page
 app.get('/login', (req, res) => {
   let templateVars = {
     user: users[req.session.user_id],
@@ -222,13 +222,13 @@ app.post('/login', (req, res) => {
   }
 });
 
-  // Logout Page
+// Logout Page
 app.post('/logout', (req, res) => {
   res.clearCookie('user_id');
   res.redirect('/');
 });
 
-  // Index Page
+// Index Page
 app.get('/', (req, res) => {
   let templateVars = {
     user: users[req.session.user_id],

@@ -1,0 +1,30 @@
+#error {
+  text-align: center;
+}
+
+#error h5 {
+  display: inline-block;
+  border-bottom-left-radius: 7px;
+  border-top-left-radius: 7px;
+  padding: 10px 10px 10px 10px;
+  margin-right: -5px;
+  margin-top: 5px;
+  color: #f8f9fa;
+  background-color: #dc3545;
+}
+
+#error button {
+  background-color: #dc3545;
+  border-bottom-right-radius: 7px;
+  border-top-right-radius: 7px;
+  padding: 12px 10px 11px 10px;
+  color: #f8f9fa;
+}
+
+#error p {
+  transition: 0.1s ease-out;
+}
+
+#error p:hover {
+  transform: scale(1.2);
+}
