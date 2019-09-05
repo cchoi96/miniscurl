@@ -87,6 +87,7 @@ a:hover:before {
   font-size: 1.2em;
   width: 75px;
   margin: 0 auto;
+  margin-bottom: 20px;
   padding: 4px;
   color: #00A7C4;
   border: 2px solid #00A7C4;
@@ -112,5 +113,7 @@ input:focus, textarea {
   outline: none !important;
 }
 
-
-
+#unique-counter, #total-counter, #unique-list {
+  font-size: 1.3em;
+  margin-bottom: 10px;
+}

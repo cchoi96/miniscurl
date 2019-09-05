@@ -64,8 +64,9 @@ app.get('/urls/new', (req, res) => {
   // Checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
   if (!uniqueVisitors[req.session.user_id]) {
+    const timezone = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
     uniqueCounter++;
-    uniqueVisitors[req.session.user_id] = new Date();
+    uniqueVisitors[req.session.user_id] = new Date(timezone).toDateString();
   }
   counter++;
   const longURL = urlDatabase[req.params.shortURL].longURL;
@@ -222,7 +223,7 @@ app.post('/login', (req, res) => {
   // Logout Page
 app.post('/logout', (req, res) => {
   res.clearCookie('user_id');
-  res.redirect('/urls');
+  res.redirect('/');
 });
 
   // Index Page

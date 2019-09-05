@@ -16,12 +16,6 @@
       <div>
         <h3 id="title">TinyURL for...</h3>
         <h3 id="longURL"><%= longURL %></h3>
-        <% if (uniqueVisitorsCounter) { %>
-        <h6>Unique Visitors: <%= uniqueVisitorsCounter %> </h6>
-        <% } %>
-        <% if (visitors) { %>
-        <h6>Total Visitors: <%= visitors %> </h6>
-        <% } %>
         <p id="shortURL">Short URL</p>
         <div id='arrow'>&darr;</div>
         <div id="shortURL-link">
@@ -33,10 +27,18 @@
               <button type="submit" id="edit-button">Edit</button>
           </form>
         </div>
-        <% if (uniqueVisitorsObj) { %>
-        <% for (key in uniqueVisitorsObj) { %>
-        <p>Visitor: <%= key %> Time Stamp: <%= uniqueVisitorsObj[key] %></p>
+        <% if (uniqueVisitorsCounter) { %>
+          <h6 id='unique-counter'>Unique Visitors: <%= uniqueVisitorsCounter %> </h6>
+          <% } %>
+        <% if (visitors) { %>
+          <h6 id='total-counter'>Total Visitors: <%= visitors %> </h6>
         <% } %>
+        <% if (uniqueVisitorsObj) { %>
+          <div id='unique-list'>
+            <% for (key in uniqueVisitorsObj) { %>
+            <p>Visitor: <%= key %> Time Stamp: <%= uniqueVisitorsObj[key] %></p>
+            <% } %>
+          </div>
         <% } %>
       </div>
     </div>

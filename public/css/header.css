@@ -120,7 +120,7 @@ form > button:hover {
   color: #343a40;
 }
 
-form > button:not(#edit-button):before {
+form > .hover:before {
   content: "";
   position: absolute;
   width: 100%;
@@ -135,7 +135,7 @@ form > button:not(#edit-button):before {
   transition: all 0.25s ease-in-out 0s;
 }
 
-form > button:not(#edit-button):hover:before {
+form > .hover:hover:before {
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);

@@ -41,6 +41,12 @@ h4 {
   border-radius: 7px;
 }
 
+#new-form button:hover {
+  background-color: #00A7C4;
+  color: #f8f9fa;
+  cursor: pointer;
+}
+
 input {
   width: 300px;
   padding: 10px;
