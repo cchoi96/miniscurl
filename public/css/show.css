@@ -23,7 +23,7 @@ a:hover {
   color: #343a40;
 }
 
-a:before {
+a:not(#logo-link):before {
   content: "";
   position: absolute;
   width: 100%;
@@ -38,7 +38,7 @@ a:before {
   transition: all 0.25s ease-in-out 0s;
 }
 
-a:hover:before {
+a:not(#logo-link):hover:before {
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
