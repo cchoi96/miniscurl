@@ -117,3 +117,8 @@ input:focus, textarea {
   font-size: 1.3em;
   margin-bottom: 10px;
 }
+
+#unique-list {
+  padding-top: 10px;
+  font-style: italic;
+}

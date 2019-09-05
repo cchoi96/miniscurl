@@ -64,9 +64,11 @@ app.get('/urls/new', (req, res) => {
   // Checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
   if (!uniqueVisitors[req.session.user_id]) {
-    const timezone = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+    let timeStamp = Date.now();
+    let date = new Date(timeStamp).toLocaleDateString('en-US', {timeZone: "America/New_York"});
+    let time = new Date(timeStamp).toLocaleTimeString('en-US', {timeZone: "America/New_York"});
     uniqueCounter++;
-    uniqueVisitors[req.session.user_id] = new Date(timezone).toDateString();
+    uniqueVisitors[req.session.user_id] = `${date} : ${time}`;
   }
   counter++;
   const longURL = urlDatabase[req.params.shortURL].longURL;
