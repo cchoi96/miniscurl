@@ -9,12 +9,13 @@ body, html {
   height: 100%;
   margin: 0 auto;
   width: 95%;
+  color: #343a40;
 }
 
 .container {
   padding: 20px 0 20px 0;
   display: flex;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #343a40;
 }
 
 .container a {
@@ -22,11 +23,13 @@ body, html {
   color: inherit;
 }
 
+
 .container li {
   font-size: 1.1em;
   padding: 20px 10px 15px 10px;
   list-style-type: none;
   transition: 0.1s ease-out;
+  color: #343a40;
 }
 
 .container li:hover {
@@ -40,7 +43,7 @@ body, html {
 }
 
 #logo:hover {
-  color: #000000;
+  color: #343a40;
 }
 
 #end-status {
@@ -58,6 +61,7 @@ body, html {
   font-family: 'Raleway', sans-serif;
   font-size: 1em;
   border: none;
+  color: #343a40;
   background-color: inherit;
 }
 
@@ -66,7 +70,15 @@ body, html {
   color: #A5A4A4;
 }
 
-#userID {
+#userID-container {
   text-align: center;
-  padding-top: 10px;
+}
+
+#userID {
+  display: inline-block;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: 10px 10px 10px 10px;
+  color: #f8f9fa;
+  background-color: #007bff;
 }

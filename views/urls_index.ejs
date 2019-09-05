@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href='/css/index.css' rel='stylesheet' type='text/css'>
   <title>TinyApp</title>
 </head>
 
@@ -13,11 +14,11 @@
     <% include partials/_error.ejs %>
   <% } %>
   <main>
-    <h3>My URLs</h3>
+    <h3 id="title">My URLs</h3>
     <table>
       <thead>
         <tr>
-          <th >Short URL</th>
+          <th>Short URL</th>
           <th>Long URL</th>
           <th>Edit</th>
           <th>Delete</th>
@@ -29,10 +30,10 @@
             <td><%= url %></td>
             <td><%= urls[url] %></td>
             <td><form method="POST" action='/urls/<%= url %>'>
-              <button type="submit">EDIT</button>
+              <button type="submit" id='edit'>EDIT</button>
             </form></button></td>
             <td><form method="POST" action='/urls/<%= url %>/delete?_method=DELETE'>
-              <button type="submit">DELETE</button>
+              <button type="submit" id='delete'>DELETE</button>
             </form></button></td>
           </tr>
         <% } %>

@@ -34,5 +34,7 @@
     <% } %>
 </nav>
 <% if (user) { %>
-  <p id='userID'>Logged in as: <%= user.email %>!</p>
+  <div id='userID-container'>
+    <p id='userID'>Logged in as: <%= user.email %>!</p>
+  </div>
 <% } %>
