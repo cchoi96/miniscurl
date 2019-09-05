@@ -1,28 +1,34 @@
-<header>
-  <nav>
-    <a href="/urls">TinyApp</a>
-    <div>
-      <div>
-        <a href="/urls">My URLs</a>
-        <a href="/urls/new">Create New URL</a>
-      </div>
-    </div>
+<link href='/css/header.css' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+<nav>
+  <ul class='container'>
+    <li id='logo'><a href='/home'>TinyApp</a></li>
+    <li><a href='/urls'>My URLs</a></li>
+    <li id='create-url'><a href="/urls/new">Create New URL</a></li>
     <% if (user) { %>
-        <form method="POST" action="/logout">
-          <p>Logged in as: <%= user.email %>!</p>
-          <button type="submit">Log Out</button>
-        </form>
+    <li class='button-left'>
+      <form method="POST" action="/logout">
+        <p>Logged in as: <%= user.email %>!</p>
+        <button type="submit">Log Out</button>
+      </form>
+    </li>
     <% } else  { %>
-          <a href="/register">
-            <button type="button">
-              Register
-            </button>
-          </a>
-          <a href="/login">
-            <button type="button">
-              Login
-            </button>
-          </a>
+    <div id='end'>
+      <li class='button-left'>
+        <a href="/register">
+          <button type="button">
+            Register
+          </button>
+        </a>
+      </li>
+      <li class='button-left'>
+        <a href="/login">
+          <button type="button">
+            Login
+          </button>
+        </a>
+      </li>
+    </div>
     <% } %>
-  </nav>
-</header>
+</nav>

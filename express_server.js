@@ -10,6 +10,7 @@ const app = express();
 const PORT = 8080;
 
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
   name: 'user_id',
@@ -230,7 +231,7 @@ app.get('/', (req, res) => {
     user: users[req.session.user_id],
     urls: urlDatabase,
     errorMsg: false };
-  res.render('/urls_home', templateVars);
+  res.render('urls_home', templateVars);
 });
 // -------------------------------------------------------------------------------------------------------------
 

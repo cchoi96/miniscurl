@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.container {
+  font-family: 'Raleway', sans-serif;
+  padding: 20px 0 20px 0;
+  display: flex;
+}
+
+.container a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container li {
+  font-size: 1em;
+  padding: 20px 10px 15px 10px;
+  list-style-type: none;
+  transition: 0.1s ease-out;
+}
+
+.container li:hover {
+  transform: scale(1.07);
+}
+
+
+#logo {
+  padding: 0 30px 0 0;
+  font-size: 3em;
+}
+
+#end {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+}
+
+#end button {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1em;
+  border: none;
+  background-color: inherit;
+}
+
+#end button:hover {
+  cursor: pointer;
+}
