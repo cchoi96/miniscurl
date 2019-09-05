@@ -126,9 +126,6 @@ app.get('/urls/:shortURL', (req, res) => {
 });
 
 // Main URL Page
-app.get('/urls.json', (req, res) => {
-  res.json(urlDatabase);
-});
 
 app.get('/urls', (req, res) => {
   let templateVars = {
