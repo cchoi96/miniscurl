@@ -1,0 +1,33 @@
+#main-page {
+  display: flex;
+  flex-direction: row;
+}
+
+#main-info {
+  margin-left: 5%;
+  width: 50%;
+  position: absolute;
+  padding-top: 25vh;
+  padding-left: 30px;
+  z-index: 999;
+}
+
+#main-info h1 {
+  margin-bottom: 30px;
+  font-size: 3em;
+}
+
+#main-info p {
+  font-size: 1.3em;
+  width: 75%;
+}
+
+#main-img {
+  position: absolute;
+  right: 0;
+  height: 65%;
+}
+
+#main-img img {
+  height: 125%;
+}
