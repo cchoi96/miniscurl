@@ -67,3 +67,7 @@ table th {
   font-size: 1.4em;
   padding-bottom: 20px;
 }
+
+table td {
+  padding-bottom: 10px;
+}
