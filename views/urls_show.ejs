@@ -4,7 +4,7 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>Short URL></title>
+  <title>Short URL</title>
 </head>
 
 <body>
@@ -13,6 +13,12 @@
     <div class="card-header"></div>
       <div class="card-body">
         <h5 class="card-title">TinyURL for: <%= longURL %></h5>
+        <% if (uniqueVisitorsCounter) { %>
+          <h6>Unique Visitors: <%= uniqueVisitorsCounter %> </h6>
+        <% } %>
+        <% if (visitors) { %>
+          <h6>Total Visitors: <%= visitors %> </h6>
+        <% } %>
         <p class="card-text">Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a></p>
         <div style="display: block; text-align: center">
           <form class="form-inline" action="/urls/<%= shortURL %>/edit?_method=PUT" method="POST" style="display: inline-block; margin: 0 auto">
@@ -22,6 +28,11 @@
             </div>
           </form>
         </div>
+        <% if (uniqueVisitorsObj) { %>
+          <% for (key in uniqueVisitorsObj) { %>
+            <p>Visitor: <%= key %> Time Stamp: <%= uniqueVisitorsObj[key] %></p>
+          <% } %>
+        <% } %>
       </div>
     <div class="card-footer text-muted"></div>
   </div>

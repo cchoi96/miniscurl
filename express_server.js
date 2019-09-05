@@ -35,6 +35,15 @@ let users = {
 };
 // -------------------------------------------------------------------------------------------------------------
 
+
+// GLOBAL VARIABLES
+  // To count unique visitors
+let uniqueVisitors = {};
+let uniqueCounter = 0;
+let counter = 0;
+
+// -------------------------------------------------------------------------------------------------------------
+
 // ROUTE HANDLERS
   // New URL Page
 app.get('/urls/new', (req, res) => {
@@ -53,6 +62,11 @@ app.get('/urls/new', (req, res) => {
   // Individual URL Page
   // Checks if shortURL exists, and if not, redirects to main url page, and if so, redirects to the actual longURL page
 app.get('/u/:shortURL', (req, res) => {
+  if (!uniqueVisitors[req.session.user_id]) {
+    uniqueCounter++;
+    uniqueVisitors[req.session.user_id] = new Date();
+  }
+  counter++;
   const longURL = urlDatabase[req.params.shortURL].longURL;
   if (req.params.shortURL === 'undefined') {
     res.redirect('/urls');
@@ -92,12 +106,14 @@ app.post('/urls/:shortURL', (req, res) => {
 });
 
 app.get('/urls/:shortURL', (req, res) => {
-  console.log(urlDatabase);
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
     let templateVars = {
       user: users[req.session.user_id],
       shortURL: req.params.shortURL,
-      longURL: urlDatabase[req.params.shortURL].longURL
+      longURL: urlDatabase[req.params.shortURL].longURL,
+      uniqueVisitorsCounter: uniqueCounter,
+      visitors: counter,
+      uniqueVisitorsObj: uniqueVisitors
     };
     res.render('urls_show', templateVars);
   } else {
