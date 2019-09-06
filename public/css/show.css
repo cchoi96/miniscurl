@@ -30,7 +30,7 @@ a:not(#logo-link):before {
   height: 1px;
   bottom: 0;
   left: 0;
-  background-color: #343a40;
+  background-color: #00A7C4;
   visibility: hidden;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
@@ -74,8 +74,13 @@ a:not(#logo-link):hover:before {
   transition: 0.2s ease-out;
   margin-bottom: 20px;
 }
+
 #shortURL-link:hover {
   transform: scale(1.1);
+}
+
+#shortURL-link a:hover {
+  color: #00A7C4;
 }
 
 #edit-form {

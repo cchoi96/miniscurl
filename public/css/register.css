@@ -44,14 +44,14 @@ button:hover {
   width: 100px;
   margin: 0 auto;
   padding: 4px;
-  color: #800000;;
-  border: 2px solid #800000;;
+  color: #00A7C4;
+  border: 2px solid #00A7C4;
   border-radius: 7px;
 }
 
 #register-form button:hover {
   color: #f8f9fa;
-  background-color: #800000;;
+  background-color: #00A7C4;
 }
 
 input {
@@ -59,8 +59,8 @@ input {
   padding: 10px;
   margin: 0 auto;
   margin-bottom: 20px;
-  border: 2px solid #800000;
-  color: #800000;
+  border: 2px solid #00A7C4;
+  color: #00A7C4;
 }
 
 input:focus, textarea {
