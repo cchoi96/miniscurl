@@ -4,6 +4,19 @@ main {
   color: #343a40;
 }
 
+input {
+  width: 300px;
+  padding: 10px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border: 2px solid #00A7C4;
+  color: #00A7C4;
+}
+
+input:focus, textarea {
+  outline: none !important;
+}
+
 button {
   font-family: 'Raleway', sans-serif;
   font-size: 1em;
@@ -52,17 +65,4 @@ button:hover {
 #register-form button:hover {
   color: #f8f9fa;
   background-color: #00A7C4;
-}
-
-input {
-  width: 300px;
-  padding: 10px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  border: 2px solid #00A7C4;
-  color: #00A7C4;
-}
-
-input:focus, textarea {
-  outline: none !important;
 }

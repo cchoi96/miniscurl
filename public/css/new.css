@@ -4,6 +4,23 @@ main {
   color: #343a40;
 }
 
+input {
+  width: 300px;
+  padding: 10px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  border: 2px solid #00A7C4;  color: #00A7C4;
+}
+
+input:focus, textarea {
+  outline: none !important;
+}
+
+h4 {
+  font-size: 1.4em;
+  margin-bottom: 30px;
+}
+
 #title {
   display: inline-block;
   font-size: 2em;
@@ -19,11 +36,6 @@ main {
   margin-top: 5px;
   margin-left: 22px;
   border: 1px solid #343a40;
-}
-
-h4 {
-  font-size: 1.4em;
-  margin-bottom: 30px;
 }
 
 #new-form {
@@ -45,15 +57,4 @@ h4 {
   background-color: #00A7C4;
   color: #f8f9fa;
   cursor: pointer;
-}
-
-input {
-  width: 300px;
-  padding: 10px;
-  margin: 0 auto;
-  margin-bottom: 20px;
-  border: 2px solid #00A7C4;  color: #00A7C4;}
-
-input:focus, textarea {
-  outline: none !important;
 }

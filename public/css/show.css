@@ -64,11 +64,6 @@ a:not(#logo-link):hover:before {
   margin-bottom: 5px;
 }
 
-#arrow {
-  font-size: 2em;
-  margin-bottom: 5px;
-}
-
 #shortURL-link {
   font-size: 1.3em;
   transition: 0.2s ease-out;
@@ -81,6 +76,11 @@ a:not(#logo-link):hover:before {
 
 #shortURL-link a:hover {
   color: #00A7C4;
+}
+
+#arrow {
+  font-size: 2em;
+  margin-bottom: 5px;
 }
 
 #edit-form {
