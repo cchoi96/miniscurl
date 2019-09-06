@@ -1,14 +1,20 @@
 <link href='/css/header.css' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <nav>
   <ul class='container'>
-    <div id='logo'><a href='/' id="logo-link">TinyApp</a></div>
-    <li><a href='/urls'>My URLs</a></li>
-    <li id='create-url'><a href="/urls/new">Create New URL</a></li>
+    <div id='responsive'>
+      <div id='logo'><a href='/' id="logo-link">TinyApp</a></div>
+      <div class="link-toggle">
+        <i class="fas fa-bars" id='hamburger'></i>
+      </div>
+    </div>
+    <li id='my-urls' class='hamburger-item'><a href='/urls'>My URLs</a></li>
+    <li id='create-url' class='hamburger-item'><a href="/urls/new">Create New URL</a></li>
     <% if (user) { %>
-    <div id='end'>
-      <li class='button-left'>
+    <div id='end' >
+      <li class='button-left hamburger-item'>
         <form method="POST" action="/logout">
           <button type="submit" class='hover'>
             Log Out
@@ -18,14 +24,14 @@
     </div>
     <% } else  { %>
     <div id='end'>
-      <li class='button-left'>
+      <li class='button-left hamburger-item'>
         <a href="/register">
           <button type="button" class='hover'>
             Register
           </button>
         </a>
       </li>
-      <li class='button-left'>
+      <li class='button-left hamburger-item'>
         <a href="/login">
           <button type="button" class='hover'>
             Login
@@ -36,7 +42,18 @@
     <% } %>
 </nav>
 <% if (user) { %>
-  <div id='userID-container'>
-    <p id='userID'>Logged in as: <%= user.email %></p>
-  </div>
+<div id='userID-container'>
+  <p id='userID'>Logged in as: <%= user.email %></p>
+</div>
 <% } %>
+
+<script>
+const classToggle = () =>  {
+  const navs = document.querySelectorAll('.hamburger-item')
+  
+  navs.forEach(nav => nav.classList.toggle('hamburger-menu'));
+}
+
+document.querySelector('.link-toggle')
+  .addEventListener('click', classToggle);
+</script>

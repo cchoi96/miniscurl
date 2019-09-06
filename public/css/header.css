@@ -16,6 +16,7 @@ body, html {
   padding: 20px 0 20px 0;
   display: flex;
   border-bottom: 1px solid #343a40;
+  overflow: hidden;
 }
 
 .container a {
@@ -144,4 +145,50 @@ form > .hover:hover:before {
   visibility: visible;
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
+}
+
+#hamburger {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  #responsive {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #create-url, #my-urls {
+    max-width: 175px;
+    margin-left: auto;
+  }
+
+  .hamburger-item {
+    display: none;
+  }
+
+  #hamburger {
+    font-size: 2em;
+    color: #343a40;
+    display: initial;
+    position: absolute;
+    cursor: pointer;
+    right: 7%;
+    top: 5%;
+    transition: 0.2s ease-out;
+  }
+
+  #hamburger:hover {
+    color: #00A7C4;
+    transform: scale(1.1);
+  }
+
+  .hamburger-menu {
+    display: flex;
+  }
 }
