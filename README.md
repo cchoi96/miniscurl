@@ -4,7 +4,6 @@ TinyApp is a full stack web application built with Node and Express that allows 
 
 ## Final Product
 
-### Currently not responsive, gif image 'borrowed' from bit.ly
 !["The home page of the app (not responsive at the moment). Image 'borrowed' from bit.ly"](public/images/home.png "Home Page")
 
 !["The registering page"](public/images/register.png "Register Page")
