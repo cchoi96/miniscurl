@@ -27,19 +27,6 @@
               <button type="submit" id="edit-button">Edit</button>
           </form>
         </div>
-        <% if (uniqueVisitorsCounter) { %>
-          <h6 id='unique-counter'>Unique Visitors: <%= uniqueVisitorsCounter %> </h6>
-          <% } %>
-        <% if (visitors) { %>
-          <h6 id='total-counter'>Total Visitors: <%= visitors %> </h6>
-        <% } %>
-        <% if (uniqueVisitorsObj) { %>
-          <div id='unique-list'>
-            <% for (key in uniqueVisitorsObj) { %>
-            <p><b>Visitor:</b> <%= key %> || <b>Visit Date:</b> <%= uniqueVisitorsObj[key] %></p>
-            <% } %>
-          </div>
-        <% } %>
       </div>
     </div>
   </main>
