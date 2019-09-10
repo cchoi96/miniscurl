@@ -53,7 +53,7 @@ router.delete('/:shortURL/delete', (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      res.redirect('/login');
+      res.redirect('/urls');
     });
 });
 
@@ -72,7 +72,7 @@ router.put('/:shortURL/edit', (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      res.redirect('/login');
+      res.redirect('/urls');
     });
 });
 
@@ -110,7 +110,7 @@ router.get('/:shortURL', (req, res) => {
         })
         .catch(err => {
           console.log(err);
-          res.redirect('/login');
+          res.redirect('/urls');
         });
     })
     .catch(err => {
@@ -138,7 +138,6 @@ router.get('/', (req, res) => {
             urls: filteredUrl,
             errorMsg: false
           };
-          console.log(filteredUrl);
           res.render('urls_index', templateVars);
         })
         .catch(err => {
