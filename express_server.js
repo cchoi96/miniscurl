@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
+const dotenv = require('dotenv').config();
 // -------------------------------------------------------------------------------------------------------------
 
 // Routes
@@ -30,7 +31,7 @@ const db = require('./config/keys').mongoURI;
 
 // Mongo
 mongoose
-  .connect(db, {
+  .connect(process.env.MONGODB_URI || db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
