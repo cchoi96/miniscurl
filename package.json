@@ -2,7 +2,7 @@
   "name": "tinyapp",
   "version": "1.0.0",
   "description": "",
-  "main": "express_server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node express_server.js",
     "test": "mocha"
