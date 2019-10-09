@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="/css/show.css" rel="stylesheet" type="text/css" />
+    <title>Short URL</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href='/css/show.css' rel='stylesheet' type='text/css'>
-  <title>Short URL</title>
-</head>
-
-<body>
-  <% include partials/_header %>
-  <main>
-    <div>
+  <body>
+    <% include partials/_header %>
+    <main>
       <div>
-        <h3 id="title">TinyURL for...</h3>
-        <h3 id="longURL"><%= longURL %></h3>
-        <p id="shortURL">Short URL</p>
-        <div id='arrow'>&darr;</div>
-        <div id="shortURL-link">
+        <div>
+          <h3 id="title">TinyURL for...</h3>
+          <h3 id="longURL"><%= longURL %></h3>
+          <p id="shortURL">Short URL</p>
+          <div id="arrow">&darr;</div>
+          <div id="shortURL-link">
             <a href="/u/<%= shortURL %>" target="_blank"><%= shortURL %></a>
           </div>
-        <div>
-          <form action="/urls/<%= shortURL %>/edit?_method=PUT" method="POST" id="edit-form">
+          <div>
+            <form
+              action="/urls/<%= shortURL %>/edit?_method=PUT"
+              method="POST"
+              id="edit-form"
+            >
               <input type="text" name="longURL" value=<%= longURL %> />
               <button type="submit" id="edit-button">Edit</button>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
-</body>
-
+    </main>
+  </body>
 </html>
